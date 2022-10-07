@@ -2,6 +2,7 @@
 
 namespace TurnPermute\Cli;
 
+use TurnPermute\DataStructures\Set;
 use Robo\Symfony\ConsoleIO;
 
 class PermuteCommands extends \Robo\Tasks
@@ -13,8 +14,14 @@ class PermuteCommands extends \Robo\Tasks
      */
     public function permute(ConsoleIO $io, $players)
     {
-        $model = new \TurnPermute\Example($players);
+        $model = Set::createRange(1, $players);
 
-        $io->text("Does not do anything yet");
+        // Print permutations
+        $permutations = $model->permutations();
+        foreach ($permutations as $key => $permutation) {
+            print "$key => " . var_export($permutation->asArray(), true) . "\n";
+        }
+
+        $io->text("That's all it does for now.");
     }
 }
