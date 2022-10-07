@@ -19,7 +19,7 @@ class PermuteCommands extends \Robo\Tasks
         // Print permutations
         $permutations = $model->permutations();
         foreach ($permutations as $key => $permutation) {
-            print "$key => " . var_export($permutation->asArray(), true) . "\n";
+            print "$key => $permutation\n";
         }
 
         $io->text("That's all it does for now.");

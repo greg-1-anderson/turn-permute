@@ -91,6 +91,11 @@ class Set
         return $result;
     }
 
+    public function __toString()
+    {
+        return "[ " . implode(', ', $this->elements) . " ]";
+    }
+
     /**
      * @return array
      */
