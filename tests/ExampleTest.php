@@ -1,6 +1,6 @@
 <?php
 
-namespace ExampleProject;
+namespace TurnPermute;
 
 use PHPUnit\Framework\TestCase;
 

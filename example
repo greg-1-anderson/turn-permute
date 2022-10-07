@@ -25,12 +25,12 @@ $classLoader = require $autoloaderPath;
 
 // Customization variables
 $argv = $_SERVER['argv'];
-$appName = "ExampleProject";
+$appName = "TurnPermute";
 $appVersion = trim(file_get_contents(__DIR__ . '/VERSION'));
-$commandClasses = [ \ExampleProject\Cli\ExampleCommands::class ];
-$selfUpdateRepository = 'g1a/starter';
-$configPrefix = 'EXAMPLEPROJECT';
-$configFilePath = getenv($configPrefix . '_CONFIG') ?: getenv('HOME') . '/.example-project/example-project.yml';
+$commandClasses = [ \TurnPermute\Cli\ExampleCommands::class ];
+$selfUpdateRepository = 'greg-1-anderson/turn-permute';
+$configPrefix = 'TURNPERMUTE';
+$configFilePath = getenv($configPrefix . '_CONFIG') ?: getenv('HOME') . '/.turn-permute/turn-permute.yml';
 
 // Define our Runner, and pass it the command classes we provide.
 $runner = new \Robo\Runner($commandClasses);
