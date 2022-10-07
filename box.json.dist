@@ -1,5 +1,5 @@
 {
-  "main": "example",
-  "output": "example.phar",
-  "files": ["example", "VERSION"]
+  "main": "turns",
+  "output": "turns.phar",
+  "files": ["turns", "VERSION"]
 }
