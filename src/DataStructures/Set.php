@@ -11,7 +11,7 @@ class Set
 
     protected function __construct(array $elements)
     {
-        $this->elements = array_combine($elements, $elements);
+        $this->elements = array_values($elements);
     }
 
     /**
@@ -41,21 +41,44 @@ class Set
     }
 
     /**
+     * Return the first item in the set
+     */
+    public function first(): string|int|float
+    {
+        return reset($this->elements);
+    }
+
+    /**
+     * Return the last item in the set
+     */
+    public function last(): string|int|float
+    {
+        return end($this->elements);
+    }
+
+    /**
      * Return an itererator over the values in the set. Both the
      * key and the value of the iterator will hold the value from
      * the element in the set.
      *
+     * n.b. This returns a SetIterator, which provides getPreviousItem()
+     * and getNextItem() methods for examining adjacent items in the set.
+     *
      * @return \ArrayIterator elements of the set
      */
-    public function getIterator(): \ArrayIterator
+    public function getIterator(): SetIterator
     {
-        return new \ArrayIterator($this->elements);
+        $iterator = new \ArrayIterator($this->elements);
+        return new SetIterator($this, $iterator);
     }
 
     /**
      * Return an itererator over the values in the set. The key
      * will contain the value from the set, and the value will
      * be an array containing all of the other elements in the set.
+     *
+     * n.b. This returns an ordinary \ArrayIterator, so getPreviousItem()
+     * and getNextItem() are not supported.
      *
      * @return \ArrayIterator elements of the set
      */
@@ -66,7 +89,7 @@ class Set
                 function ($item) {
                     return Set::create(array_diff($this->elements, [$item]));
                 },
-                $this->elements
+                array_combine($this->elements, $this->elements)
             )
         );
     }
