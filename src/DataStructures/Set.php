@@ -2,13 +2,16 @@
 
 namespace TurnPermute\DataStructures;
 
+/**
+ * An immutable set of objects.
+ */
 class Set
 {
     protected array $elements;
 
     protected function __construct(array $elements)
     {
-        $this->elements = array_combine($elements, $elements);        
+        $this->elements = array_combine($elements, $elements);
     }
 
     /**
@@ -60,7 +63,7 @@ class Set
     {
         return new \ArrayIterator(
             array_map(
-                function($item) {
+                function ($item) {
                     return Set::create(array_diff($this->elements, [$item]));
                 },
                 $this->elements
@@ -91,15 +94,69 @@ class Set
         return $result;
     }
 
-    public function __toString()
+    /**
+     * Returns the same Set with all elements shifted by an offset.
+     *
+     * @param int $step
+     *   How many elements to rotate through in one step
+     * @return Set
+     */
+    public function rotate(int $step = 1): Set
     {
+        // Range-test our parameter
+        if (abs($step) >= $this->sizeOfSet()) {
+            throw new \Exception('Step is ' . $step . ', but it cannot be greater than or equal to the number of elements in the set, which is ' . $this->sizeOfSet());
+        }
+
+        // Negative steps roll the other way
+        if ($step < 0) {
+            $step = $this->sizeOfSet() + $step;
+        }
+
+        $begin = array_slice($this->elements, $step);
+        $end = array_slice($this->elements, 0, $step);
+
+        return Set::create(array_merge($begin, $end));
+    }
+
+    /**
+     * Return all of the rotations of this set.
+     * (Not guarenteed to work for steps other than 1).
+     *
+     * @param int $step
+     *   How many elements to rotate through in one step
+     * @return Set
+     */
+    public function rotations(int $step = 1): array
+    {
+        $result = [];
+        $rotated = $this;
+
+        for ($i = 0; $i < $this->sizeOfSet(); ++$i) {
+            $result[] = $rotated;
+            $rotated = $rotated->rotate($step);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        // Avoid extra whitespace with empty sets
+        if (!$this->sizeOfSet()) {
+            return '[]';
+        }
+
         return "[ " . implode(', ', $this->elements) . " ]";
     }
 
     /**
      * @return array
      */
-    public function asArray()
+    public function asArray(): array
     {
         return $this->elements;
     }
@@ -107,7 +164,7 @@ class Set
     /**
      * @return int
      */
-    public function sizeOfSet()
+    public function sizeOfSet(): int
     {
         return count($this->elements);
     }

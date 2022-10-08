@@ -69,6 +69,8 @@ class PermuteCommandsTest extends TestCase implements CommandTesterInterface
      */
     public function testPermuteCommands($expectedOutput, $expectedStatus, $variable_args)
     {
+        $this->markTestSkipped('Not sure what our CLI is going to do, so no tests yet');
+
         // Set this to the path to a fixture configuration file if you'd like to use one.
         $configurationFile = false;
 
