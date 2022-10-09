@@ -4,7 +4,9 @@ namespace TurnPermute\DataStructures;
 
 /**
  * An iterator over a Set, which provides access to the
- * previous and next items in the iteration (with wraparound).
+ * previous and next items in the iteration (with wraparound),
+ * and also accounts for which items have and have not been
+ * visited.
  */
 class SetIterator implements \Iterator
 {
@@ -13,7 +15,14 @@ class SetIterator implements \Iterator
     protected \Iterator $iterator;
     protected \Iterator $nextIterator;
     protected mixed $previous;
+    protected array $past;
+    protected array $future;
 
+    /**
+     * A SetIterator may only be created via Set::getIterator().
+     * It is not possible for a client to create an \ArrayIterator
+     * over a Set.
+     */
     public function __construct(Set $data, \ArrayIterator $iterator)
     {
         $this->data = $data;
@@ -26,6 +35,8 @@ class SetIterator implements \Iterator
     {
         $this->iterator->rewind();
         $this->previous = $this->data->last();
+        $this->past = [];
+        $this->future = $this->data->asArray();
         $this->nextIterator = clone $this->iterator;
         $this->nextIterator->next();
     }
@@ -49,6 +60,16 @@ class SetIterator implements \Iterator
         return $this->nextIterator->current();
     }
 
+    public function getPastItems(): array
+    {
+        return $this->past;
+    }
+
+    public function getFutureItems(): array
+    {
+        return $this->future;
+    }
+
     public function key(): mixed
     {
         return $this->iterator->key();
@@ -59,6 +80,8 @@ class SetIterator implements \Iterator
         $this->previous = $this->current();
         $this->iterator->next();
         $this->nextIterator->next();
+        $this->past[] = $this->previous;
+        array_shift($this->future);
     }
 
     public function valid(): bool
