@@ -8,20 +8,37 @@ namespace TurnPermute\Logic;
 class TurnSequenceStats
 {
     /** @var Set[] */
-    public array $turnSequences;
+    public TurnSet $turnSet;
 
-    protected function __construct(Set $playerSet)
+    protected function __construct(TurnSet $turnSet)
     {
-        $this->turnSequences = $playerSet->rotations();
+        $this->turnSet = $turnSet;
     }
 
     public static function create(TurnSet $turnSet)
     {
-        $iter = $turnSet->getIterator();
+        $stats = new TurnSequenceStats();
 
-        while ($iter->valid()) {
-            $iter->next();
+        return $stats;
+    }
+
+    /**
+     * For each player, count how many times each other player
+     * plays before, and how many times each other player plays after.
+     */
+    protected function calculateBeforeAndAfter()
+    {
+        $stats = new BeforeAndAfterStats();
+
+        foreach ($roundIter = $this->turnSet->getIterator() as $turnSequence) {
+            $stats->beginRoundStats($roundIter->key());
+            foreach ($playerIter = $turnSequence->getIterator() as $player) {
+                $stats->recordBeforeStats($player, $playerIter->getPastItems());
+                $stats->recordAfterStats($player, $playerIter->getFutureItems());
+            }
         }
+
+        return $stats;
     }
 
     /**

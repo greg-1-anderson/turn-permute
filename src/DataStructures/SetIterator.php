@@ -37,6 +37,7 @@ class SetIterator implements \Iterator
         $this->previous = $this->data->last();
         $this->past = [];
         $this->future = $this->data->asArray();
+        array_shift($this->future);
         $this->nextIterator = clone $this->iterator;
         $this->nextIterator->next();
     }
@@ -68,6 +69,11 @@ class SetIterator implements \Iterator
     public function getFutureItems(): array
     {
         return $this->future;
+    }
+
+    public function partials(): Set
+    {
+        return Set::create(array_merge($this->getPastItems(), $this->getFutureItems()));
     }
 
     public function key(): mixed

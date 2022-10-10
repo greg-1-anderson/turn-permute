@@ -73,28 +73,6 @@ class Set
     }
 
     /**
-     * Return an itererator over the values in the set. The key
-     * will contain the value from the set, and the value will
-     * be an array containing all of the other elements in the set.
-     *
-     * n.b. This returns an ordinary \ArrayIterator, so getPreviousItem()
-     * and getNextItem() are not supported.
-     *
-     * @return \ArrayIterator elements of the set
-     */
-    public function getPartialsIterator(): \ArrayIterator
-    {
-        return new \ArrayIterator(
-            array_map(
-                function ($item) {
-                    return Set::create(array_diff($this->elements, [$item]));
-                },
-                array_combine($this->elements, $this->elements)
-            )
-        );
-    }
-
-    /**
      * Return all of the permutations of this set as a list of sets.
      *
      * @return Set[]
@@ -107,8 +85,8 @@ class Set
 
         $result = [];
 
-        foreach ($this->getPartialsIterator() as $value => $partials) {
-            $partialPermutations = $partials->permutations();
+        foreach ($iter = $this->getIterator() as $value) {
+            $partialPermutations = $iter->partials()->permutations();
             foreach ($partialPermutations as $partialPermutation) {
                 $result[] = Set::create(array_merge([$value], $partialPermutation->asArray()));
             }
