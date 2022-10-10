@@ -68,8 +68,7 @@ class Set
      */
     public function getIterator(): SetIterator
     {
-        $iterator = new \ArrayIterator($this->elements);
-        return new SetIterator($this, $iterator);
+        return new SetIterator($this);
     }
 
     /**

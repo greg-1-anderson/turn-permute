@@ -18,15 +18,10 @@ class SetIterator implements \Iterator
     protected array $past;
     protected array $future;
 
-    /**
-     * A SetIterator may only be created via Set::getIterator().
-     * It is not possible for a client to create an \ArrayIterator
-     * over a Set.
-     */
-    public function __construct(Set $data, \ArrayIterator $iterator)
+    public function __construct(Set $data)
     {
         $this->data = $data;
-        $this->iterator = $iterator;
+        $this->iterator = new \ArrayIterator($data->asArray());
 
         $this->rewind();
     }
