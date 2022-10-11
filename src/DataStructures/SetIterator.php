@@ -26,6 +26,9 @@ class SetIterator implements \Iterator
         $this->rewind();
     }
 
+    /**
+     * Rewind the iterator back to the first item
+     */
     public function rewind(): void
     {
         $this->iterator->rewind();
@@ -37,6 +40,9 @@ class SetIterator implements \Iterator
         $this->nextIterator->next();
     }
 
+    /**
+     * Return the value of the current item
+     */
     public function current(): mixed
     {
         return $this->iterator->current();
@@ -56,19 +62,19 @@ class SetIterator implements \Iterator
         return $this->nextIterator->current();
     }
 
-    public function getPastItems(): array
+    public function getPastItems(): Set
     {
-        return $this->past;
+        return Set::create($this->past);
     }
 
-    public function getFutureItems(): array
+    public function getFutureItems(): Set
     {
-        return $this->future;
+        return Set::create($this->future);
     }
 
-    public function partials(): Set
+    public function getRemainingItems(): Set
     {
-        return Set::create(array_merge($this->getPastItems(), $this->getFutureItems()));
+        return Set::create(array_merge($this->past, $this->future));
     }
 
     public function key(): mixed

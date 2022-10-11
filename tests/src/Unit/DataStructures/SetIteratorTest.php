@@ -17,8 +17,9 @@ class SetIteratorTest extends TestCase
         $this->assertEquals(3, $iter->current());
         $this->assertEquals(7, $iter->getPreviousItem());
         $this->assertEquals(5, $iter->getNextItem());
-        $this->assertEquals([], $iter->getPastItems());
-        $this->assertEquals([5, 7], $iter->getFutureItems());
+        $this->assertEquals([], $iter->getPastItems()->asArray());
+        $this->assertEquals([5, 7], $iter->getFutureItems()->asArray());
+        $this->assertEquals([5, 7], $iter->getRemainingItems()->asArray());
 
         $iter->next();
 
@@ -27,8 +28,9 @@ class SetIteratorTest extends TestCase
         $this->assertEquals(5, $iter->current());
         $this->assertEquals(3, $iter->getPreviousItem());
         $this->assertEquals(7, $iter->getNextItem());
-        $this->assertEquals([3], $iter->getPastItems());
-        $this->assertEquals([7], $iter->getFutureItems());
+        $this->assertEquals([3], $iter->getPastItems()->asArray());
+        $this->assertEquals([7], $iter->getFutureItems()->asArray());
+        $this->assertEquals([3, 7], $iter->getRemainingItems()->asArray());
 
         $iter->next();
 
@@ -37,12 +39,13 @@ class SetIteratorTest extends TestCase
         $this->assertEquals(7, $iter->current());
         $this->assertEquals(5, $iter->getPreviousItem());
         $this->assertEquals(3, $iter->getNextItem());
-        $this->assertEquals([3, 5], $iter->getPastItems());
-        $this->assertEquals([], $iter->getFutureItems());
+        $this->assertEquals([3, 5], $iter->getPastItems()->asArray());
+        $this->assertEquals([], $iter->getFutureItems()->asArray());
+        $this->assertEquals([3, 5], $iter->getRemainingItems()->asArray());
 
         $iter->next();
         $this->assertFalse($iter->valid());
-        $this->assertEquals([3, 5, 7], $iter->getPastItems());
-        $this->assertEquals([], $iter->getFutureItems());
+        $this->assertEquals([3, 5, 7], $iter->getPastItems()->asArray());
+        $this->assertEquals([], $iter->getFutureItems()->asArray());
     }
 }

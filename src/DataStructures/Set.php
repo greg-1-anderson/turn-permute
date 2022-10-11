@@ -85,7 +85,7 @@ class Set
         $result = [];
 
         foreach ($iter = $this->getIterator() as $value) {
-            $partialPermutations = $iter->partials()->permutations();
+            $partialPermutations = $iter->getRemainingItems()->permutations();
             foreach ($partialPermutations as $partialPermutation) {
                 $result[] = Set::create(array_merge([$value], $partialPermutation->asArray()));
             }
