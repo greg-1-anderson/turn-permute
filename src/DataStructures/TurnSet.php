@@ -6,11 +6,16 @@ namespace TurnPermute\DataStructures;
  * A collection of sets representing the order players in
  * a game take their turn.
  *
- * The INDEX of the element in the set represents the turn order
- * (index zero is the first player, etc).
+ * The rows of sets represent the different rounds in the game.
  *
- * The VALUE of the element in the set represents the player number
- * who moves at that point in the sequence.
+ * The INDEX ($key) of the element in each set represents the
+ * player number. Index + 1 = player number, so the first element
+ * ($key = 0) is player 1, the next is player 2, etc.
+ *
+ * The VALUE of the element in the set represents the turn
+ * order for that player, e.g. if the first element has value
+ * `4` in a four-element set, that would mean that player 1 moves
+ * last this round.
  */
 class TurnSet
 {
@@ -24,6 +29,7 @@ class TurnSet
 
     public static function createFromArrayOfSets(array $turnSequences)
     {
+        // @todo: Check if all elements of $turnSequences are Sets, throw if not.
         return new TurnSet(Set::create($turnSequences));
     }
 
@@ -35,6 +41,26 @@ class TurnSet
     public static function create(int $players)
     {
         return TurnSet::createFromSet(Set::createRange(1, $players));
+    }
+
+    public function rotate()
+    {
+        $arrayOfArrays = [];
+        foreach ($this->getIterator() as $row) {
+            $i = 0;
+            foreach ($row->getIterator() as $item) {
+                $arrayOfArrays[$i++][] = $item;
+            }
+        }
+
+        $arrayOfSets = array_map(
+            function ($item) {
+                return Set::create($item);
+            },
+            $arrayOfArrays
+        );
+
+        return static::createFromArrayOfSets($arrayOfSets);
     }
 
     /**

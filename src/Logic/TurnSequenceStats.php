@@ -2,6 +2,9 @@
 
 namespace TurnPermute\Logic;
 
+use TurnPermute\DataStructures\Set;
+use TurnPermute\DataStructures\TurnSet;
+
 /**
  * A collection of statistics about turn orders
  */
@@ -17,26 +20,7 @@ class TurnSequenceStats
 
     public static function create(TurnSet $turnSet)
     {
-        $stats = new TurnSequenceStats();
-
-        return $stats;
-    }
-
-    /**
-     * For each player, count how many times each other player
-     * plays before, and how many times each other player plays after.
-     */
-    protected function calculateBeforeAndAfter()
-    {
-        $stats = new BeforeAndAfterStats();
-
-        foreach ($roundIter = $this->turnSet->getIterator() as $turnSequence) {
-            $stats->beginRoundStats($roundIter->key());
-            foreach ($playerIter = $turnSequence->getIterator() as $player) {
-                $stats->recordBeforeStats($player, $playerIter->getPastItems());
-                $stats->recordAfterStats($player, $playerIter->getFutureItems());
-            }
-        }
+        $stats = new TurnSequenceStats($turnSet);
 
         return $stats;
     }
@@ -48,6 +32,8 @@ class TurnSequenceStats
      */
     public static function balanced(): bool
     {
+        $stats = BeforeAndAfterStats::create($this);
+
         return true;
     }
 

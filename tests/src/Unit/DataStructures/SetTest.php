@@ -30,6 +30,18 @@ class SetTest extends TestCase
     }
 
     /**
+     * Test swapping index and values of Set objects.
+     *
+     * @dataProvider swapIndexAndValueTestValues
+     */
+    public function testSwapIndexAndValue($expected, $constructor_parameter)
+    {
+        $set = Set::create($constructor_parameter);
+        $swapped = $set->swapIndexAndValue();
+        $this->assertEquals($expected, (string) $swapped);
+    }
+
+    /**
      * Test creation of Set objects.
      *
      * @dataProvider permuteSetTestValues
@@ -65,6 +77,19 @@ class SetTest extends TestCase
 [ 3, 1, 2 ]',
                 [1, 2, 3]
             ],
+        ];
+    }
+
+    /**
+     * Data provider for testSwapIndexAndValue.
+     */
+    public function swapIndexAndValueTestValues()
+    {
+        return [
+            ['[]', []],
+            ['[ 2, 4, 3, 1 ]', [4, 1, 3, 2]],
+            ['[ 1, 2, 3, 4 ]', [1, 2, 3, 4]],
+            ['[ 3, 2, 1 ]', [5, 3, 2]],
         ];
     }
 

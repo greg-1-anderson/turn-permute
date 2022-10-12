@@ -95,6 +95,31 @@ class Set
     }
 
     /**
+     * Swaps the index and key values. Assumes that they
+     * keys are zero-based, and the values are one-based.
+     * Also assumes that keys will range from zero to N - 1,
+     * and values will range from 1 to N.
+     *
+     * If the assumptions are not met in the input set,
+     * the result set will be normalized to conform.
+     *
+     * @return Set
+     *   Indexes are now ordered by the previous VALUE minus one,
+     *   and the new values will be the former index position plus one.
+     */
+    public function swapIndexAndValue(): Set
+    {
+        $swapped = [];
+        foreach ($this->asArray() as $key => $value) {
+            $swapped[$value] = $key + 1;
+        }
+
+        ksort($swapped, SORT_NUMERIC);
+
+        return Set::create(array_values($swapped));
+    }
+
+    /**
      * Returns the same Set with all elements shifted by an offset.
      *
      * @param int $step
