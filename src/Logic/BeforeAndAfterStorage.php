@@ -18,6 +18,16 @@ class BeforeAndAfterStorage
         $this->playersAfter = new CounterGroup();
     }
 
+    public function beforeCount()
+    {
+        return $this->playersBefore->values();
+    }
+
+    public function afterCount()
+    {
+        return $this->playersAfter->values();
+    }
+
     public function recordBeforeStats(Set $playersBefore)
     {
         foreach ($playersBefore->getIterator() as $player) {

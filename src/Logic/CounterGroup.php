@@ -29,4 +29,9 @@ class CounterGroup
         }
         return $this->counters[$key];
     }
+
+    public function values()
+    {
+        return $this->counters;
+    }
 }

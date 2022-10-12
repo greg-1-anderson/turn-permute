@@ -47,6 +47,29 @@ class BeforeAndAfterStats
         // $this->getStorage($round, $player)->recordAfterStats($playersAfter);
     }
 
+    public function balanced()
+    {
+        $values = [];
+
+        foreach ($this->roundStorage[self::OVERALL] as $playerStats) {
+            $values = array_merge($values, $playerStats->beforeCount(), $playerStats->afterCount());
+        }
+
+        // We are balanced if $values is non-empty and all values are the same.
+        if (empty($values)) {
+            return false;
+        }
+
+        // Take an arbitrary item off of the array
+        $first = array_pop($values);
+        // Remove all of the entries in the array with the same value
+        $values = array_filter($values, function ($item) use ($first) {
+            return $item != $first;
+        });
+        // If there are no items left, then every item had the same value
+        return empty($values);
+    }
+
     protected function getStorage($round, $player): BeforeAndAfterStorage
     {
         if (!isset($this->roundStorage[$round][$player])) {

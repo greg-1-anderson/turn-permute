@@ -17,7 +17,9 @@ class PermuteCommands extends \Robo\Tasks
      */
     public function permute(ConsoleIO $io, $players)
     {
-        $playerTurnSequence = Set::create([4, 1, 3, 2]);
+        $playerTurnSequence = Set::create([3, 1, 2]);
+//        $playerTurnSequence = Set::create([4, 1, 3, 2]);
+//        $playerTurnSequence = Set::create([6, 1, 5, 2, 4, 3]);
         $model = TurnSet::createFromSet($playerTurnSequence);
 
         print $model;
@@ -30,7 +32,7 @@ class PermuteCommands extends \Robo\Tasks
 
         //$stats = TurnSequenceStats::create($model);
         $result = BeforeAndAfterStats::create($model);
-        var_export($result);
+        var_export($result->balanced());
 
 /*
         $model = Set::createRange(1, $players);
