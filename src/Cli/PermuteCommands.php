@@ -22,7 +22,7 @@ class PermuteCommands extends \Robo\Tasks
 //        $playerTurnSequence = Set::create([3, 1, 2]);
         $playerTurnSequence = Set::create([4, 1, 3, 2]);
 //        $playerTurnSequence = Set::create([6, 1, 5, 2, 4, 3]);
-        $model = TurnSet::createFromSet($playerTurnSequence);
+        $model = TurnSet::create($playerTurnSequence->rotations());
 
         print $model;
         print "\n";

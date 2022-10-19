@@ -22,7 +22,7 @@ class Set
      */
     public static function create(array $elements): Set
     {
-        return new Set($elements);
+        return new static($elements);
     }
 
     /**
@@ -56,7 +56,10 @@ class Set
         return end($this->elements);
     }
 
-    public function size()
+    /**
+     * @return int
+     */
+    public function sizeOfSet(): int
     {
         return count($this->elements);
     }
@@ -92,7 +95,7 @@ class Set
         foreach ($iter = $this->getIterator() as $value) {
             $partialPermutations = $iter->getRemainingItems()->permutations();
             foreach ($partialPermutations as $partialPermutation) {
-                $result[] = Set::create(array_merge([$value], $partialPermutation->asArray()));
+                $result[] = static::create(array_merge([$value], $partialPermutation->asArray()));
             }
         }
 
@@ -121,7 +124,7 @@ class Set
 
         ksort($swapped, SORT_NUMERIC);
 
-        return Set::create(array_values($swapped));
+        return static::create(array_values($swapped));
     }
 
     /**
@@ -146,7 +149,7 @@ class Set
         $begin = array_slice($this->elements, $step);
         $end = array_slice($this->elements, 0, $step);
 
-        return Set::create(array_merge($begin, $end));
+        return static::create(array_merge($begin, $end));
     }
 
     /**
@@ -189,13 +192,5 @@ class Set
     public function asArray(): array
     {
         return $this->elements;
-    }
-
-    /**
-     * @return int
-     */
-    public function sizeOfSet(): int
-    {
-        return count($this->elements);
     }
 }

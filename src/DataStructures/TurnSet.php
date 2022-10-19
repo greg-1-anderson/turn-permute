@@ -17,46 +17,21 @@ namespace TurnPermute\DataStructures;
  * `4` in a four-element set, that would mean that player 1 moves
  * last this round.
  */
-class TurnSet
+class TurnSet extends Set
 {
-    /** @var Set A set of sets (turn sequences) */
-    public Set $turnSequences;
-
-    protected function __construct(Set $turnSequences)
+    protected function __construct(array $turnSequences)
     {
-        $this->turnSequences = $turnSequences;
+        parent::__construct($turnSequences);
     }
 
-    public static function createFromArrayOfSets(array $turnSequences)
+    public static function createSetOfSize(int $players)
     {
-        // @todo: Check if all elements of $turnSequences are Sets, throw if not.
-        return new TurnSet(Set::create($turnSequences));
+        return TurnSet::create(Set::createRange(1, $players)->rotations());
     }
 
-    public static function createFromSet(Set $turnSequence)
+    public function swapIndexAndValue(): Set
     {
-        return static::createFromArrayOfSets($turnSequence->rotations());
-    }
-
-    public static function create(int $players)
-    {
-        return TurnSet::createFromSet(Set::createRange(1, $players));
-    }
-
-    /**
-     * Return the first item in the set
-     */
-    public function first(): Set
-    {
-        return $this->turnSequences->first();
-    }
-
-    /**
-     * Return the last item in the set
-     */
-    public function last(): Set
-    {
-        return $this->turnSequences->last();
+        throw new \RuntimeError('Cannot swap index and value when value of set is non-numeric.');
     }
 
     public function swapRowsAndColumns()
@@ -76,17 +51,7 @@ class TurnSet
             $arrayOfArrays
         );
 
-        return static::createFromArrayOfSets($arrayOfSets);
-    }
-
-    /**
-     * Return an itererator over the turn sequences in the list
-     *
-     * @return \ArrayIterator turn sequences of the set
-     */
-    public function getIterator(): \Iterator
-    {
-        return $this->turnSequences->getIterator();
+        return static::create($arrayOfSets);
     }
 
     public function __toString()

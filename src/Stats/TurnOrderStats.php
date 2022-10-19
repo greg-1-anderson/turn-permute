@@ -22,7 +22,7 @@ class TurnOrderStats
     public static function create(TurnSet $turnSet)
     {
         $firstRound = $turnSet->first();
-        $stats = new TurnOrderStats($firstRound->size());
+        $stats = new TurnOrderStats($firstRound->sizeOfSet());
 
         foreach ($roundIter = $turnSet->getIterator() as $turnSequence) {
             $round = $roundIter->key();
