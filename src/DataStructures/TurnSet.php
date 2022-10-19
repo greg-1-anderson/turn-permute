@@ -59,7 +59,7 @@ class TurnSet
         return $this->turnSequences->last();
     }
 
-    public function rotate()
+    public function swapRowsAndColumns()
     {
         $arrayOfArrays = [];
         foreach ($this->getIterator() as $row) {

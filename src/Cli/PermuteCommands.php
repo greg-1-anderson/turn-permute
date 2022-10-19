@@ -27,7 +27,7 @@ class PermuteCommands extends \Robo\Tasks
         print $model;
         print "\n";
 
-        $model->rotate();
+        $model->swapRowsAndColumns();
 
         print $model;
         print "\n";
