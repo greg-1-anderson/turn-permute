@@ -7,6 +7,7 @@ use TurnPermute\DataStructures\TurnSet;
 use TurnPermute\Stats\TurnSequenceStats;
 use TurnPermute\Stats\BeforeAndAfterStats;
 use TurnPermute\Stats\TurnOrderStats;
+use TurnPermute\Stats\TurnRepetitivenessStats;
 use Robo\Symfony\ConsoleIO;
 
 class PermuteCommands extends \Robo\Tasks
@@ -41,6 +42,12 @@ class PermuteCommands extends \Robo\Tasks
         $result = TurnOrderStats::create($model);
         print "Fair: ";
         var_export($result->fair());
+        print "\n";
+
+
+        $result = TurnRepetitivenessStats::create($model);
+        print "Repetitive: ";
+        var_export($result->repetitive());
         print "\n";
 
 /*

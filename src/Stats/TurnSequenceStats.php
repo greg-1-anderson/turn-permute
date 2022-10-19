@@ -47,7 +47,7 @@ class TurnSequenceStats
     {
         $stats = TurnOrderStats::create($this);
 
-        return $status->fair();
+        return $stats->fair();
     }
 
     /**
@@ -57,7 +57,9 @@ class TurnSequenceStats
      */
     public static function nonRepetitive(): bool
     {
-        return true;
+        $stats = TurnRepetitivenessStats::create($this);
+
+        return !$stats->repetitive();
     }
 
     public function __toString()
