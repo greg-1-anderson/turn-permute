@@ -1,6 +1,6 @@
 <?php
 
-namespace TurnPermute\Logic;
+namespace TurnPermute\Datastructures;
 
 /**
  * A collection of statistics about turn orders
@@ -14,10 +14,15 @@ class CounterGroup
         $this->counters = [];
     }
 
+    public function zero($key)
+    {
+        $this->counters[$key] = 0;
+    }
+
     public function accumulate($key)
     {
         if (!isset($this->counters[$key])) {
-            $this->counters[$key] = 0;
+            $this->zero($key);
         }
         $this->counters[$key]++;
     }

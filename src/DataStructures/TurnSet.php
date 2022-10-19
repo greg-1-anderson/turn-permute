@@ -43,6 +43,22 @@ class TurnSet
         return TurnSet::createFromSet(Set::createRange(1, $players));
     }
 
+    /**
+     * Return the first item in the set
+     */
+    public function first(): Set
+    {
+        return $this->turnSequences->first();
+    }
+
+    /**
+     * Return the last item in the set
+     */
+    public function last(): Set
+    {
+        return $this->turnSequences->last();
+    }
+
     public function rotate()
     {
         $arrayOfArrays = [];

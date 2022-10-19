@@ -1,6 +1,6 @@
 <?php
 
-namespace TurnPermute\Logic;
+namespace TurnPermute\Stats;
 
 use TurnPermute\DataStructures\Set;
 use TurnPermute\DataStructures\TurnSet;
@@ -34,7 +34,7 @@ class TurnSequenceStats
     {
         $stats = BeforeAndAfterStats::create($this);
 
-        return true;
+        return $stats->balanced();
     }
 
     /**
@@ -45,7 +45,9 @@ class TurnSequenceStats
      */
     public static function fair(): bool
     {
-        return true;
+        $stats = TurnOrderStats::create($this);
+
+        return $status->fair();
     }
 
     /**

@@ -43,7 +43,7 @@ class Set
     /**
      * Return the first item in the set
      */
-    public function first(): string|int|float
+    public function first(): mixed
     {
         return reset($this->elements);
     }
@@ -51,9 +51,14 @@ class Set
     /**
      * Return the last item in the set
      */
-    public function last(): string|int|float
+    public function last(): mixed
     {
         return end($this->elements);
+    }
+
+    public function size()
+    {
+        return count($this->elements);
     }
 
     /**

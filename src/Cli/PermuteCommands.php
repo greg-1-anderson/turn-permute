@@ -4,8 +4,9 @@ namespace TurnPermute\Cli;
 
 use TurnPermute\DataStructures\Set;
 use TurnPermute\DataStructures\TurnSet;
-use TurnPermute\Logic\TurnSequenceStats;
-use TurnPermute\Logic\BeforeAndAfterStats;
+use TurnPermute\Stats\TurnSequenceStats;
+use TurnPermute\Stats\BeforeAndAfterStats;
+use TurnPermute\Stats\TurnOrderStats;
 use Robo\Symfony\ConsoleIO;
 
 class PermuteCommands extends \Robo\Tasks
@@ -17,8 +18,8 @@ class PermuteCommands extends \Robo\Tasks
      */
     public function permute(ConsoleIO $io, $players)
     {
-        $playerTurnSequence = Set::create([3, 1, 2]);
-//        $playerTurnSequence = Set::create([4, 1, 3, 2]);
+//        $playerTurnSequence = Set::create([3, 1, 2]);
+        $playerTurnSequence = Set::create([4, 1, 3, 2]);
 //        $playerTurnSequence = Set::create([6, 1, 5, 2, 4, 3]);
         $model = TurnSet::createFromSet($playerTurnSequence);
 
@@ -32,7 +33,15 @@ class PermuteCommands extends \Robo\Tasks
 
         //$stats = TurnSequenceStats::create($model);
         $result = BeforeAndAfterStats::create($model);
+        print "Balanced: ";
         var_export($result->balanced());
+        print "\n";
+
+
+        $result = TurnOrderStats::create($model);
+        print "Fair: ";
+        var_export($result->fair());
+        print "\n";
 
 /*
         $model = Set::createRange(1, $players);

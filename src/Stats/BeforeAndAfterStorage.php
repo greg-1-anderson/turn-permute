@@ -1,8 +1,9 @@
 <?php
 
-namespace TurnPermute\Logic;
+namespace TurnPermute\Stats;
 
 use TurnPermute\DataStructures\Set;
+use TurnPermute\DataStructures\CounterGroup;
 
 /**
  * A collection of statistics about turn orders

@@ -1,6 +1,6 @@
 <?php
 
-namespace TurnPermute\Logic;
+namespace TurnPermute\Stats;
 
 use TurnPermute\DataStructures\Set;
 use TurnPermute\DataStructures\TurnSet;
