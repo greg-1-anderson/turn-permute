@@ -1,8 +1,9 @@
 <?php
 
-namespace TurnPermute\DataStructures;
+namespace TurnPermute\Iterators;
 
 use PHPUnit\Framework\TestCase;
+use TurnPermute\DataStructures\Set;
 
 class SetIteratorTest extends TestCase
 {

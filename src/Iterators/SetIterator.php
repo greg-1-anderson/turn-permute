@@ -1,6 +1,8 @@
 <?php
 
-namespace TurnPermute\DataStructures;
+namespace TurnPermute\Iterators;
+
+use TurnPermute\DataStructures\Set;
 
 /**
  * An iterator over a Set, which provides access to the

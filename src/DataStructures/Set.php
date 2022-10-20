@@ -2,6 +2,8 @@
 
 namespace TurnPermute\DataStructures;
 
+use TurnPermute\Iterators\SetIterator;
+
 /**
  * An immutable set of objects.
  */
