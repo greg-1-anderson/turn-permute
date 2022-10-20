@@ -128,6 +128,34 @@ class Set
     }
 
     /**
+     * Swaps rows and columns. The first row will contain the values of all
+     * of the first elements from the rows of the source Set, the second row
+     * will contain all of the second elements, and so on.
+     *
+     * @return Set
+     *   New set with rows and columns swapped.
+     */
+    public function swapRowsAndColumns()
+    {
+        $arrayOfArrays = [];
+        foreach ($this->getIterator() as $row) {
+            $i = 0;
+            foreach ($row->getIterator() as $item) {
+                $arrayOfArrays[$i++][] = $item;
+            }
+        }
+
+        $arrayOfSets = array_map(
+            function ($item) {
+                return Set::create($item);
+            },
+            $arrayOfArrays
+        );
+
+        return static::create($arrayOfSets);
+    }
+
+    /**
      * Returns the same Set with all elements shifted by an offset.
      *
      * @param int $step

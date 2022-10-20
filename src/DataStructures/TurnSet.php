@@ -34,26 +34,6 @@ class TurnSet extends Set
         throw new \RuntimeError('Cannot swap index and value when value of set is non-numeric.');
     }
 
-    public function swapRowsAndColumns()
-    {
-        $arrayOfArrays = [];
-        foreach ($this->getIterator() as $row) {
-            $i = 0;
-            foreach ($row->getIterator() as $item) {
-                $arrayOfArrays[$i++][] = $item;
-            }
-        }
-
-        $arrayOfSets = array_map(
-            function ($item) {
-                return Set::create($item);
-            },
-            $arrayOfArrays
-        );
-
-        return static::create($arrayOfSets);
-    }
-
     public function __toString()
     {
         $result = '';
