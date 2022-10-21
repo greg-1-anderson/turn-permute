@@ -64,6 +64,8 @@ class PermuteCommands extends \Robo\Tasks
 
         print "done permuting\n";
 
+        print "====\n$permutations\n====\n";
+
 //        $playerTurnSequence = Set::create([3, 1, 2]);
         $playerTurnSequence = Set::create([4, 1, 3, 2]);
 //        $playerTurnSequence = Set::create([6, 1, 5, 2, 4, 3]);

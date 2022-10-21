@@ -89,4 +89,26 @@ class PermutationsIterator implements \Iterator
     {
         return $this->iterator->valid();
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        // Avoid extra whitespace with empty sets
+        if (!$this->data->sizeOfSet()) {
+            return '[]';
+        }
+
+        $result = '';
+
+        // Make a copy of ourselves to avoid altering our state
+        // should someone dump our contents mid-iteration.
+        $iteratorCopy = new PermutationsIterator($this->data);
+        foreach ($iteratorCopy as $set) {
+            $result .= "$set\n";
+        }
+
+        return $result;
+    }
 }
