@@ -4,6 +4,7 @@ namespace TurnPermute\Cli;
 
 use TurnPermute\DataStructures\Set;
 use TurnPermute\DataStructures\TurnSet;
+use TurnPermute\Iterators\PermutationsIterator;
 use TurnPermute\Stats\TurnSequenceStats;
 use TurnPermute\Stats\BeforeAndAfterStats;
 use TurnPermute\Stats\TurnOrderStats;
@@ -12,6 +13,40 @@ use Robo\Symfony\ConsoleIO;
 
 class PermuteCommands extends \Robo\Tasks
 {
+    protected static function oneRound($turnOrderNumber, $reverse): array
+    {
+        $playerOrder = [];
+        $otherPlayers = [2, 3];
+        $otherPlayers = array_reverse($otherPlayers);
+
+        switch ($turnOrderNumber) {
+            case 1:
+                $playerOrder = array_merge([1], $otherPlayers);
+                break;
+
+            case 2:
+                $playerOrder = [$otherPlayers[1], 1, $otherPlayers[0]];
+                break;
+
+            case 3:
+                $playerOrder = array_merge($otherPlayers, [1]);
+                break;
+        }
+        return $playerOrder;
+    }
+
+    protected static function oneSet($setNumber): array
+    {
+        return [];
+    }
+
+    protected static function buildThreePlayerSequences(): array
+    {
+        $turnOrderGroups = Set::create([1,2,3]);
+
+        $turnOrderList = $turnOrderGroups->permutations();
+        return [];
+    }
     /**
      * Do some permutations
      *
@@ -19,6 +54,16 @@ class PermuteCommands extends \Robo\Tasks
      */
     public function permute(ConsoleIO $io, $players)
     {
+
+        $exampleSet = Set::create([3, 5, 7]);
+        $permutations = new PermutationsIterator($exampleSet);
+
+        foreach ($permutations as $key => $value) {
+            print "$key => $value\n";
+        }
+
+        print "done permuting\n";
+
 //        $playerTurnSequence = Set::create([3, 1, 2]);
         $playerTurnSequence = Set::create([4, 1, 3, 2]);
 //        $playerTurnSequence = Set::create([6, 1, 5, 2, 4, 3]);
