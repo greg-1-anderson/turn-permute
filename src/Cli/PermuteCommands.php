@@ -44,7 +44,7 @@ class PermuteCommands extends \Robo\Tasks
     {
         $turnOrderGroups = Set::create([1,2,3]);
 
-        $turnOrderList = $turnOrderGroups->permutations();
+        $turnOrderList = $turnOrderGroups->getPermutations();
         return [];
     }
     /**
@@ -105,7 +105,7 @@ class PermuteCommands extends \Robo\Tasks
         print $rotatedModel . PHP_EOL;
 
         // Print permutations
-        $permutations = $model->permutations();
+        $permutations = $model->getPermutations();
         foreach ($permutations as $key => $permutation) {
             print "$key => $permutation\n";
         }

@@ -82,26 +82,14 @@ class Set
     }
 
     /**
-     * Return all of the permutations of this set as a list of sets.
+     * Return an iterator over all of the permutations of this set.
+     * The value of each step of the iteration will be a set.
      *
-     * @return Set[]
+     * @return \Iterator
      */
-    public function permutations(): array
+    public function getPermutations(): \Iterator
     {
-        if ($this->sizeOfSet() <= 1) {
-            return [$this];
-        }
-
-        $result = [];
-
-        foreach ($iter = $this->getIterator() as $value) {
-            $partialPermutations = $iter->getRemainingItems()->permutations();
-            foreach ($partialPermutations as $partialPermutation) {
-                $result[] = static::create(array_merge([$value], $partialPermutation->asArray()));
-            }
-        }
-
-        return $result;
+        return new PermutationsIterator($this);
     }
 
     /**
