@@ -3,6 +3,7 @@
 namespace TurnPermute\DataStructures;
 
 use TurnPermute\Iterators\SetIterator;
+use TurnPermute\Iterators\PermutationsIterator;
 
 /**
  * An immutable set of objects.

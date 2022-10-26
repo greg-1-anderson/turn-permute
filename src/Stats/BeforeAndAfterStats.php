@@ -49,6 +49,10 @@ class BeforeAndAfterStats
 
     public function balanced()
     {
+        if (empty($this->roundStorage[self::OVERALL])) {
+            return false;
+        }
+
         $values = [];
 
         foreach ($this->roundStorage[self::OVERALL] as $playerStats) {

@@ -56,15 +56,9 @@ class PermuteCommands extends \Robo\Tasks
     {
 
         $exampleSet = Set::create([3, 5, 7]);
-        $permutations = new PermutationsIterator($exampleSet);
+        $permutations = $exampleSet->getPermutations();
 
-        foreach ($permutations as $key => $value) {
-            print "$key => $value\n";
-        }
-
-        print "done permuting\n";
-
-        print "====\n$permutations\n====\n";
+        print "====\n$permutations ====\n";
 
 //        $playerTurnSequence = Set::create([3, 1, 2]);
         $playerTurnSequence = Set::create([4, 1, 3, 2]);

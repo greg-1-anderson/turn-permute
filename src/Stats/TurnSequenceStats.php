@@ -30,9 +30,9 @@ class TurnSequenceStats
      * goes BEFORE each other player the same number of
      * times as they go AFTER that same player.
      */
-    public static function balanced(): bool
+    public function balanced(): bool
     {
-        $stats = BeforeAndAfterStats::create($this);
+        $stats = BeforeAndAfterStats::create($this->turnSet);
 
         return $stats->balanced();
     }
@@ -43,9 +43,9 @@ class TurnSequenceStats
      * (i.e. they go first the same number of times that
      * they go second, last, etc).
      */
-    public static function fair(): bool
+    public function fair(): bool
     {
-        $stats = TurnOrderStats::create($this);
+        $stats = TurnOrderStats::create($this->turnSet);
 
         return $stats->fair();
     }
@@ -55,21 +55,30 @@ class TurnSequenceStats
      * no player is ever in the same turn order for two
      * rounds in a row.
      */
-    public static function nonRepetitive(): bool
+    public function nonRepetitive(): bool
     {
-        $stats = TurnRepetitivenessStats::create($this);
+        $stats = TurnRepetitivenessStats::create($this->turnSet);
 
         return !$stats->repetitive();
     }
 
     public function __toString()
     {
-        $result = '';
-
-        foreach ($this->turnSequences as $set) {
-            $result .= $set . PHP_EOL;
+        $items = [];
+        if ($this->fair()) {
+            $items[] = "Fair";
+        }
+        if ($this->balanced()) {
+            $items[] = "Balanced";
+        }
+        if ($this->nonRepetitive()) {
+            $items[] = "Non-repetitive";
         }
 
-        return $result;
+        if (empty($items)) {
+            return "Neither Fair, Balanced, nor Non-repetitive";
+        }
+
+        return implode(', ', $items);
     }
 }
